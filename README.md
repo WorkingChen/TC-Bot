@@ -69,13 +69,16 @@
 `--write_model_dir`:写入模型的目录<br/>
 `--trained_model_path`: 训练RL代理模型的目录，也是预测时加载模型的目录.
 
-`--learning_phase`: train/test/all, default is all. You can split the user goal set into train and test set, or do not split (all); We introduce some randomness at the first sampled user action, even for the same user goal, the generated dialogue might be different.<br/>
+`--learning_phase`: train/test/all, 默认是all。拆分用户目标集为训练集和测试集，不要全部拆分; 我们引入一些随机因子，We introduce some randomness at the first sampled user action, even for the same user goal, the generated dialogue might be different.<br/>
 
 ## Running Dialogue Agents
+主程序run.py
+（1）初始化 Agent、User、NLU、NLG、对话管理DialogManager、对话参数设置。<br/>
+（2）run_episodes()生成每轮对话，如果agt == 9  warm_start_simulation()，迭代episode_over, reward = dialog_manager.next_turn()，如果agt=9，没有trained_model_path，则训练网络模型并保存。
 
 ### Rule Agent
 ```sh
-python run.py --agt 5 --usr 1 --max_turn 40
+python run.py --agt 5（RequestBasicsAgent代理） --usr 1（使用模拟器） --max_turn 40
 	      --episodes 150
 	      --movie_kb_path ./deep_dialog/data/movie_kb.1k.p
 	      --goal_file_path ./deep_dialog/data/user_goals_first_turn_template.part.movie.v1.p
@@ -88,27 +91,27 @@ python run.py --agt 5 --usr 1 --max_turn 40
 ### Cmd Agent
 NL Input
 ```sh
-python run.py --agt 0 --usr 1 --max_turn 40
+python run.py --agt 0（AgentCmd代理） --usr 1（使用模拟器） --max_turn 40
 	      --episodes 150
 	      --movie_kb_path ./deep_dialog/data/movie_kb.1k.p
 	      --goal_file_path ./deep_dialog/data/user_goals_first_turn_template.part.movie.v1.p
 	      --intent_err_prob 0.00
 	      --slot_err_prob 0.00
 	      --episodes 500
-	      --act_level 0
+	      --act_level 0（Dia_Act级别用户模拟器）
 	      --run_mode 0
 	      --cmd_input_mode 0
 ```
 Dia_Act Input
 ```sh
-python run.py --agt 0 --usr 1 --max_turn 40
+python run.py --agt 0（AgentCmd代理） --usr 1（使用模拟器） --max_turn 40
 	      --episodes 150
 	      --movie_kb_path ./deep_dialog/data/movie_kb.1k.p 
 	      --goal_file_path ./deep_dialog/data/user_goals_first_turn_template.part.movie.v1.p
 	      --intent_err_prob 0.00
 	      --slot_err_prob 0.00
 	      --episodes 500
-	      --act_level 0
+	      --act_level 0（Dia_Act级别用户模拟器）
 	      --run_mode 0
 	      --cmd_input_mode 1
 ```
@@ -116,7 +119,7 @@ python run.py --agt 0 --usr 1 --max_turn 40
 ### End2End RL Agent
 Train End2End RL Agent without NLU and NLG (with simulated noise in NLU)
 ```sh
-python run.py --agt 9 --usr 1 --max_turn 40
+python run.py --agt 9（DQN代理） --usr 1（使用模拟器） --max_turn 40
 	      --movie_kb_path ./deep_dialog/data/movie_kb.1k.p
 	      --dqn_hidden_size 80
 	      --experience_replay_pool_size 1000
@@ -124,7 +127,7 @@ python run.py --agt 9 --usr 1 --max_turn 40
 	      --simulation_epoch_size 100
 	      --write_model_dir ./deep_dialog/checkpoints/rl_agent/
 	      --run_mode 3
-	      --act_level 0
+	      --act_level 0（Dia_Act级别用户模拟器）
 	      --slot_err_prob 0.00
 	      --intent_err_prob 0.00
 	      --batch_size 16
@@ -134,7 +137,7 @@ python run.py --agt 9 --usr 1 --max_turn 40
 ```
 Train End2End RL Agent with NLU and NLG
 ```sh
-python run.py --agt 9 --usr 1 --max_turn 40
+python run.py --agt 9 --usr 1（使用模拟器） --max_turn 40
 	      --movie_kb_path ./deep_dialog/data/movie_kb.1k.p
 	      --dqn_hidden_size 80
 	      --experience_replay_pool_size 1000
@@ -142,7 +145,7 @@ python run.py --agt 9 --usr 1 --max_turn 40
 	      --simulation_epoch_size 100
 	      --write_model_dir ./deep_dialog/checkpoints/rl_agent/
 	      --run_mode 3
-	      --act_level 1
+	      --act_level 1（NL级别用户模拟器）
 	      --slot_err_prob 0.00
 	      --intent_err_prob 0.00
 	      --batch_size 16
@@ -150,12 +153,12 @@ python run.py --agt 9 --usr 1 --max_turn 40
 	      --warm_start 1
 	      --warm_start_epochs 120
 ```
-Test RL Agent with N dialogues:
+基于N轮对话测试Rl代理:
 ```sh
-python run.py --agt 9 --usr 1 --max_turn 40
+python run.py --agt 9 --usr 1（使用模拟器） --max_turn 40
 	      --movie_kb_path ./deep_dialog/data/movie_kb.1k.p
-	      --dqn_hidden_size 80
-	      --experience_replay_pool_size 1000
+	      --dqn_hidden_size 80（DQN隐藏层层数）
+	      --experience_replay_pool_size 1000
 	      --episodes 300 
 	      --simulation_epoch_size 100
 	      --write_model_dir ./deep_dialog/checkpoints/rl_agent/
@@ -164,19 +167,19 @@ python run.py --agt 9 --usr 1 --max_turn 40
 	      --batch_size 16
 	      --goal_file_path ./deep_dialog/data/user_goals_first_turn_template.part.movie.v1.p
 	      --trained_model_path ./deep_dialog/checkpoints/rl_agent/noe2e/agt_9_478_500_0.98000.p
-	      --run_mode 3
+	      --run_mode 3(training或者predict)非运行模式
 ```
 
 ## Evaluation
-To evaluate the performance of agents, three metrics are available: success rate, average reward, average turns. Here we show the learning curve with success rate.
+为了评估代理的性能，三个重要指标：成功率、平均价值和平均轮数。
 
-1. Plotting Learning Curve
+1. 画学习曲线
 ``` python draw_learning_curve.py --result_file ./deep_dialog/checkpoints/rl_agent/noe2e/agt_9_performance_records.json```
-2. Pull out the numbers and draw the curves in Excel
+2. 在Excel表格中画学习曲线
 
 ## Reference
 
-Main papers to be cited
+主要参考文献
 ```
 @inproceedings{li2017end,
   title={End-to-End Task-Completion Neural Dialogue Systems},
