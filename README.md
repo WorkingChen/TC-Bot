@@ -14,21 +14,21 @@
 ## 数据
 所有的数据都存放在该文件下: ./src/deep_dialog/data
 
-* Movie Knowledge Bases<br/>
+* 电影知识库<br/>
 `movie_kb.1k.p` ： 94%(for `user_goals_first_turn_template_subsets.v1.p`)<br/>
 `movie_kb.v2.p` ： 36%(for `user_goals_first_turn_template_subsets.v1.p`)
 
-* User Goals<br/>
+* 用户目标<br/>
 `user_goals_first_turn_template.v2.p` --- user goals extracted from the first user turn<br/>
 `user_goals_first_turn_template.part.movie.v1.p` --- a subset of user goals [Please use this one, the upper bound success rate on movie_kb.1k.json is 0.9765.]
 
-* NLG Rule Template<br/>
+* NLG规则模板<br/>
 `dia_act_nl_pairs.v6.json` ：用户模拟器和代理的一些预定义NLG规则模板
 
-* Dialog Act Intent<br/>
+* Intent分类<br/>
 `dia_acts.txt`：Intent分类
 
-* Dialog Act Slot<br/>
+* Slot分类<br/>
 `slot_set.txt`：Slot分类
 
 ## 参数
