@@ -35,39 +35,39 @@
 
 ### Basic setting
 
-`--agt`: the agent id<br/>
-`--usr`: the user (simulator) id<br/>
-`--max_turn`: maximum turns<br/>
-`--episodes`: how many dialogues to run<br/>
-`--slot_err_prob`: slot level err probability<br/>
-`--slot_err_mode`: which kind of slot err mode<br/>
-`--intent_err_prob`: intent level err probability
+`--agt`:代理Id<br/>
+`--usr`: 用户（或模拟器）Id<br/>
+`--max_turn`: 对话最大轮数<br/>
+`--episodes`: 对话迭代次数<br/>
+`--slot_err_prob`: slot错分概率<br/>
+`--slot_err_mode`: slot错分为哪个mode<br/>
+`--intent_err_prob`: intent错分概率
 
 
 ### Data setting
 
-`--movie_kb_path`: the movie kb path for agent side<br/>
-`--goal_file_path`: the user goal file path for user simulator side
+`--movie_kb_path`:代理方面电影的kb路径<br/>
+`--goal_file_path`: 用户目标路径
 
 ### Model setting
 
-`--dqn_hidden_size`: hidden size for RL (DQN) agent<br/>
-`--batch_size`: batch size for DQN training<br/>
-`--simulation_epoch_size`: how many dialogue to be simulated in one epoch<br/>
+`--dqn_hidden_size`: DQN代理隐藏层层数t<br/>
+`--batch_size`: DQN训练的batch大小<br/>
+`--simulation_epoch_size`: 每一次迭代，对话仿真次数<br/>
 `--warm_start`: use rule policy to fill the experience replay buffer at the beginning<br/>
-`--warm_start_epochs`: how many dialogues to run in the warm start
+`--warm_start_epochs`: 热启动运行对话数量
 
 ### Display setting
 
-`--run_mode`: 0 for display mode (NL); 1 for debug mode (Dia_Act); 2 for debug mode (Dia_Act and NL); >3 for no display (i.e. training)<br/>
-`--act_level`: 0 for user simulator is Dia_Act level; 1 for user simulator is NL level<br/>
-`--auto_suggest`: 0 for no auto_suggest; 1 for auto_suggest<br/>
-`--cmd_input_mode`: 0 for NL input; 1 for Dia_Act input. (this parameter is for AgentCmd only)
+`--run_mode`: 0 (NL)运行模式; 1(Dia_Act)debug模式; 2(Dia_Act and NL)debug模式; 3(training或者predict)非运行模式<br/>
+`--act_level`: 0（Dia_Act级别用户模拟器）; 1（NL级别用户模拟器）<br/>
+`--auto_suggest`: 0 （no auto_suggest）; 1（auto_suggest）<br/>
+`--cmd_input_mode`: 0（输入方式NL）; 1（输入方式Dia_Act）. (这个参数只针对代理模式为AgentCmd模式时设置)
 
 ### Others
 
-`--write_model_dir`: the directory to write the models<br/>
-`--trained_model_path`: the path of the trained RL agent model; load the trained model for prediction purpose.
+`--write_model_dir`:写入模型的目录<br/>
+`--trained_model_path`: 训练RL代理模型的目录，也是预测时加载模型的目录.
 
 `--learning_phase`: train/test/all, default is all. You can split the user goal set into train and test set, or do not split (all); We introduce some randomness at the first sampled user action, even for the same user goal, the generated dialogue might be different.<br/>
 
