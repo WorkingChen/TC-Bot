@@ -4,14 +4,14 @@
 [A User Simulator for Task-Completion Dialogues](http://arxiv.org/abs/1612.05688).*
 本文档描述了如何运行仿真和不同对话代理（基于规则，命令行，强化学习），更多代理和用户模拟设置方法在文献的Recipe章节。
 
-## Content
-* [Data](#数据模块)
-* [Parameter](#参数设置模块)
-* [Running Dialogue Agents](#运行对话和代理模块)
-* [Evaluation](#评估模块)
-* [Reference](#参考模块)
+## 内容
+* [数据](#数据模块)
+* [参数](#参数设置模块)
+* [运行对话代理](#运行对话和代理模块)
+* [评估](#评估模块)
+* [参考](#参考模块)
 
-## Data
+## 数据
 所有的数据都存放在该文件下: ./src/deep_dialog/data
 
 * Movie Knowledge Bases<br/>
@@ -31,9 +31,9 @@
 * Dialog Act Slot<br/>
 `slot_set.txt`：Slot分类
 
-## Parameter
+## 参数
 
-### Basic setting
+### 基础设置
 
 `--agt`:代理Id<br/>
 `--usr`: 用户（或模拟器）Id<br/>
@@ -44,12 +44,12 @@
 `--intent_err_prob`: intent错分概率
 
 
-### Data setting
+### 数据设置
 
 `--movie_kb_path`:代理方面电影的kb路径<br/>
 `--goal_file_path`: 用户目标路径
 
-### Model setting
+### 模型设置
 
 `--dqn_hidden_size`: DQN代理隐藏层层数t<br/>
 `--batch_size`: DQN训练的batch大小<br/>
@@ -57,26 +57,26 @@
 `--warm_start`: use rule policy to fill the experience replay buffer at the beginning<br/>
 `--warm_start_epochs`: 热启动运行对话数量
 
-### Display setting
+### 运行设置
 
 `--run_mode`: 0 (NL)运行模式; 1(Dia_Act)debug模式; 2(Dia_Act and NL)debug模式; 3(training或者predict)非运行模式<br/>
 `--act_level`: 0（Dia_Act级别用户模拟器）; 1（NL级别用户模拟器）<br/>
 `--auto_suggest`: 0 （no auto_suggest）; 1（auto_suggest）<br/>
 `--cmd_input_mode`: 0（输入方式NL）; 1（输入方式Dia_Act）. (这个参数只针对代理模式为AgentCmd模式时设置)
 
-### Others
+### 其他
 
 `--write_model_dir`:写入模型的目录<br/>
 `--trained_model_path`: 训练RL代理模型的目录，也是预测时加载模型的目录.
 
 `--learning_phase`: train/test/all, 默认是all。拆分用户目标集为训练集和测试集，不要全部拆分; 我们引入一些随机因子，We introduce some randomness at the first sampled user action, even for the same user goal, the generated dialogue might be different.<br/>
 
-## Running Dialogue Agents
+## 运行对话代理
 主程序run.py
 （1）初始化 Agent、User、NLU、NLG、对话管理DialogManager、对话参数设置。<br/>
 （2）run_episodes()生成每轮对话，如果agt == 9  warm_start_simulation()，迭代episode_over, reward = dialog_manager.next_turn()，如果agt=9，没有trained_model_path，则训练网络模型并保存。
 
-### Rule Agent
+### RequestBasicsAgent代理
 ```sh
 python run.py --agt 5（RequestBasicsAgent代理） --usr 1（使用模拟器） --max_turn 40
 	      --episodes 150
@@ -88,8 +88,8 @@ python run.py --agt 5（RequestBasicsAgent代理） --usr 1（使用模拟器）
 	      --act_level 0
 ```
 
-### Cmd Agent
-NL Input
+### AgentCmd代理
+NL输入
 ```sh
 python run.py --agt 0（AgentCmd代理） --usr 1（使用模拟器） --max_turn 40
 	      --episodes 150
@@ -102,7 +102,7 @@ python run.py --agt 0（AgentCmd代理） --usr 1（使用模拟器） --max_tur
 	      --run_mode 0
 	      --cmd_input_mode 0
 ```
-Dia_Act Input
+Dia_Act输入
 ```sh
 python run.py --agt 0（AgentCmd代理） --usr 1（使用模拟器） --max_turn 40
 	      --episodes 150
@@ -116,8 +116,8 @@ python run.py --agt 0（AgentCmd代理） --usr 1（使用模拟器） --max_tur
 	      --cmd_input_mode 1
 ```
 
-### End2End RL Agent
-Train End2End RL Agent without NLU and NLG (with simulated noise in NLU)
+### End2End RL代理（DQN代理）
+没有NLU和NLG模块训练End2End RL代理(NLU模块模拟噪声)
 ```sh
 python run.py --agt 9（DQN代理） --usr 1（使用模拟器） --max_turn 40
 	      --movie_kb_path ./deep_dialog/data/movie_kb.1k.p
@@ -135,7 +135,7 @@ python run.py --agt 9（DQN代理） --usr 1（使用模拟器） --max_turn 40
 	      --warm_start 1
 	      --warm_start_epochs 120
 ```
-Train End2End RL Agent with NLU and NLG
+有NLU和NLG模块训练End2End RL代理
 ```sh
 python run.py --agt 9 --usr 1（使用模拟器） --max_turn 40
 	      --movie_kb_path ./deep_dialog/data/movie_kb.1k.p
