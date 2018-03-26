@@ -26,10 +26,10 @@
 `dia_act_nl_pairs.v6.json` ：用户模拟器和代理的一些预定义NLG规则模板
 
 * Intent分类<br/>
-`dia_acts.txt`：Intent分类
+`dia_acts.txt`
 
 * Slot分类<br/>
-`slot_set.txt`：Slot分类
+`slot_set.txt`
 
 ## 参数
 
