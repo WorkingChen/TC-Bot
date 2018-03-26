@@ -99,7 +99,7 @@ python run.py --agt 0（AgentCmd代理） --usr 1（使用模拟器） --max_tur
 	      --slot_err_prob 0.00
 	      --episodes 500
 	      --act_level 0（Dia_Act级别用户模拟器）
-	      --run_mode 0
+	      --run_mode 0(NL)运行模式
 	      --cmd_input_mode 0
 ```
 Dia_Act输入
@@ -112,7 +112,7 @@ python run.py --agt 0（AgentCmd代理） --usr 1（使用模拟器） --max_tur
 	      --slot_err_prob 0.00
 	      --episodes 500
 	      --act_level 0（Dia_Act级别用户模拟器）
-	      --run_mode 0
+	      --run_mode 0 (NL)运行模式
 	      --cmd_input_mode 1
 ```
 
@@ -126,7 +126,7 @@ python run.py --agt 9（DQN代理） --usr 1（使用模拟器） --max_turn 40
 	      --episodes 500
 	      --simulation_epoch_size 100
 	      --write_model_dir ./deep_dialog/checkpoints/rl_agent/
-	      --run_mode 3
+	      --run_mode 3  (training或者predict)非运行模式
 	      --act_level 0（Dia_Act级别用户模拟器）
 	      --slot_err_prob 0.00
 	      --intent_err_prob 0.00
@@ -137,14 +137,14 @@ python run.py --agt 9（DQN代理） --usr 1（使用模拟器） --max_turn 40
 ```
 有NLU和NLG模块训练End2End RL代理
 ```sh
-python run.py --agt 9 --usr 1（使用模拟器） --max_turn 40
+python run.py --agt 9 (DQN) --usr 1（使用模拟器） --max_turn 40
 	      --movie_kb_path ./deep_dialog/data/movie_kb.1k.p
 	      --dqn_hidden_size 80
 	      --experience_replay_pool_size 1000
 	      --episodes 500
 	      --simulation_epoch_size 100
 	      --write_model_dir ./deep_dialog/checkpoints/rl_agent/
-	      --run_mode 3
+	      --run_mode 3  (training或者predict)非运行模式
 	      --act_level 1（NL级别用户模拟器）
 	      --slot_err_prob 0.00
 	      --intent_err_prob 0.00
@@ -155,7 +155,7 @@ python run.py --agt 9 --usr 1（使用模拟器） --max_turn 40
 ```
 基于N轮对话测试Rl代理:
 ```sh
-python run.py --agt 9 --usr 1（使用模拟器） --max_turn 40
+python run.py --agt 9 (DQN)--usr 1（使用模拟器） --max_turn 40
 	      --movie_kb_path ./deep_dialog/data/movie_kb.1k.p
 	      --dqn_hidden_size 80（DQN隐藏层层数）
 	      --experience_replay_pool_size 1000
